@@ -339,7 +339,7 @@ pub mod prelude {
 
     /// Convenience method to generate a simple die.
     ///
-    /// Unwraps the result of [`Die::new_baked(n)`](Die##method.new_baked).
+    /// Unwraps the result of [`Die::new_baked(n)`](Die#method.new_baked).
     ///
     /// # Panics
     ///
