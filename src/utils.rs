@@ -1,7 +1,7 @@
 #[cfg(doc)]
 use crate::roll::Roll;
 
-/// This module provides common implementations of the [Roll] trait.
+/// This module provides common implementations of the [`Roll`] trait.
 pub mod dice {
     use std::{
         collections::HashMap,
@@ -15,9 +15,9 @@ pub mod dice {
 
     use crate::{prelude::*, roll::compound::*};
 
-    /// A convenience [Roll] object with a single possible result
+    /// A convenience [`Roll`] object with a single possible result
     ///
-    /// A stand-in type for a case where a [Roll] type is required but a constant result is sufficient.
+    /// A stand-in type for a case where a [`Roll`] type is required but a constant result is sufficient.
     ///
     /// # Example
     /// ```
@@ -107,8 +107,8 @@ pub mod dice {
 
     /// An unweighted die with integer sides
     ///
-    /// If you don't need to use your own [Rng](rand::Rng) implementation,
-    /// consider using [dice::prelude::d](crate::prelude::d).
+    /// If you don't need to use your own [`Rng`](rand::Rng) implementation,
+    /// consider using [`dice::prelude::d`](crate::prelude::d).
     ///
     /// # Examples
     ///
@@ -159,9 +159,9 @@ pub mod dice {
         }
     }
 
-    /// A rollable [Vec] of [Roll] objects.
+    /// A rollable [`Vec`] of [`Roll`] objects.
     ///
-    /// It is recommended to utilize the [box_dice] macro for this use case.
+    /// It is recommended to utilize the [`box_dice`] macro for this use case.
     ///
     /// # Examples
     /// ```
@@ -222,7 +222,7 @@ pub mod dice {
     /// Add a constant to a die result
     ///
     /// The result of the die roll is added to the constant. This works for any types
-    /// `U`, `V` where `U::Output` can be added to `V`. `T` is the output type.
+    /// `U`, `V` where [`<U as Roll>::Output`](Roll#associatedtype.Output) can be added with `V`, with `T` as the output type.
     ///
     /// # Examples
     /// ```
@@ -281,7 +281,7 @@ pub mod dice {
     /// Multiply a die result by a constant
     ///
     /// The result of the die roll is multiplied by the constant. This works for any types
-    /// `U`, `V` where `U::Output` can be multiplied by `V`. `T` is the output type.
+    /// `U`, `V` where [`<U as Roll>::Output`](Roll#associatedtype.Output) can be multiplied by `V`, with `T` as the output type.
     ///
     /// # Examples
     /// ```
@@ -337,31 +337,31 @@ pub mod dice {
         }
     }
 
-    /// Used to create a SumDie
+    /// Used to create a [`SumDie`]
     ///
     /// This trait is implemented by default on all numeric types.
     ///
-    /// `MonoidSum` requires the following property:
+    /// [`MonoidSum`] requires the following property:
     ///
     /// `sum(a, b, c, ...) == sum(sum(sum(sum(), a), b), c)...`
     ///
     /// "Monoid" usually requires an operation have an identity element and the associative property.
     ///
-    /// `MonoidSum` does require an identity element but only requires the associative property
+    /// [`MonoidSum`] does require an identity element but requires the associative property only
     /// in exactly the case stated above.
     pub trait MonoidSum: Sum {}
 
-    /// Used to create a ProductDie
+    /// Used to create a [`ProductDie`]
     ///
     /// This trait is implemented by default on all numeric types.
     ///
-    /// `MonoidProduct` requires the following property:
+    /// [`MonoidProduct`] requires the following property:
     ///
     /// `product(a, b, c, ...) == product(product(product(product(), a), b), c)...`
     ///
     /// "Monoid" usually requires an operation have an identity element and the associative property.
     ///
-    /// `MonoidProduct` does require an identity element but only requires the associative property
+    /// [`MonoidProduct`] does require an identity element but only requires the associative property
     /// in exactly the case stated above.
     pub trait MonoidProduct: Product {}
 
@@ -379,10 +379,10 @@ pub mod dice {
 
     /// Sum the results of the input dice
     ///
-    /// Consider initializing this with the [box_dice] macro.
+    /// Consider initializing this with the [`box_dice`] macro.
     ///
-    /// To use this on a custom type, implement [Sum] and [MonoidSum]. The [Sum] implementation
-    /// must meet the additional requirements of [MonoidSum].
+    /// To use this on a custom type, implement [`Sum`] and [`MonoidSum`]. The [`Sum`] implementation
+    /// must meet the additional requirements of [`MonoidSum`].
     ///
     /// # Examples
     ///
@@ -467,10 +467,10 @@ pub mod dice {
 
     /// Get the product of the results of the input dice
     ///
-    /// Consider initializing this with the [box_dice] macro.
+    /// Consider initializing this with the [`box_dice`] macro.
     ///
-    /// To use this on a custom type, implement [Product] and [MonoidProduct]. The [Product] implementation
-    /// must meet the additional requirements of [MonoidProduct].
+    /// To use this on a custom type, implement [`Product`] and [`MonoidProduct`]. The [`Product`] implementation
+    /// must meet the additional requirements of [`MonoidProduct`].
     ///
     /// # Examples
     ///
@@ -615,9 +615,9 @@ pub mod dice {
     ///
     /// # Examples
     /// ```
-    /// use dice::{prelude::d, roll::Roll, utils::dice::Advantage};
+    /// use dice::{prelude::d, roll::Roll, utils::dice::Disadvantage};
     ///
-    /// let mut adv = Advantage::new(d(20), d(20));
+    /// let mut dadv = Disadvantage::new(d(20), d(20));
     ///
     /// for _ in 0..10 {
     ///     println!("{}", adv.roll());
@@ -674,7 +674,7 @@ pub mod dice {
     /// This is a convenience implementation. If you have a function
     /// to run on the results of one die to produce a new die, this is the place to use it.
     ///
-    /// This die is used by [AddDie] and [MulDie]. It is syntax sugar for implementing a [CompoundRoll]
+    /// This die is used by [`AddDie`] and [`MulDie`]. It is syntax sugar for implementing a [`CompoundRoll`]
     /// type composed of a single die.
     ///
     /// # Example

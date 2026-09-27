@@ -4,7 +4,7 @@ pub mod roll {
 
     /// Provides a random element and its probability distribution.
     ///
-    /// The `Roll::roll` method returns a random element and `Roll::get_stats`
+    /// The [`Roll::roll`](Roll#tymethod.roll) method returns a random element and [`Roll::get_stats`](Roll#tymethod.get_stats)
     /// returns the probability of each output in the range of 0.0-1.0.
     ///
     /// # Example
@@ -40,7 +40,13 @@ pub mod roll {
 
     pub use crate::box_dice;
 
-    /// Generate a `Vec<Box<dyn Roll>>` object from the parameters.
+    /// Generate a [`Vec<Box<dyn Roll>>`] object from the parameters.
+    /// 
+    /// This is the tool to use if all your [`Roll`] objects have the same [`Roll::Output`](Roll#associatedtype.Output) type. It
+    /// allows for varying types and list lengths at runtime.
+    /// 
+    /// If you want to compose a die of dice of varying [`Roll::Output`](Roll#associatedtype.Output) types that will be known
+    /// at compile time, you should look into [`CompoundRoll`](compound::CompoundRoll) and its associated macros.
     ///
     /// # Example
     /// ```
@@ -61,16 +67,16 @@ pub mod roll {
 
     /// Tools for composing new dice types from a set of preexisting dice
     ///
-    /// See [CompoundRoll](compound::CompoundRoll) for examples.
+    /// See [`CompoundRoll`](compound::CompoundRoll) for examples.
     pub mod compound {
         use super::Roll;
         pub use crate::{roll_tuple, roll_tuple_pattern, roll_tuple_type};
         use std::{collections::HashMap, hash::Hash};
 
-        /// A helper trait for implementing [CompoundRoll]
+        /// A helper trait for implementing [`CompoundRoll`]
         ///
-        /// Interact with this trait through the macros [roll_tuple], [roll_tuple_type],
-        /// and [roll_tuple_pattern]. See [CompoundRoll] for examples.
+        /// Interact with this trait through the macros [`roll_tuple`], [`roll_tuple_type`],
+        /// and [`roll_tuple_pattern`]. See [`CompoundRoll`] for examples.
         pub trait RollTuple {
             type Outputs: Eq + Hash + Clone;
 
@@ -79,12 +85,12 @@ pub mod roll {
             fn get_stats_all(&self) -> HashMap<Self::Outputs, f32>;
         }
 
-        /// Generate a folded tuple of [Roll] objects that implements [RollTuple]
+        /// Generate a folded tuple of [`Roll`] objects that implements [`RollTuple`]
         ///
-        /// Used alongside [roll_tuple_type] and [roll_tuple_pattern] to add convenience to
-        /// implementing [CompoundRoll].
+        /// Used alongside [`roll_tuple_type`] and [`roll_tuple_pattern`] to add convenience to
+        /// implementing [`CompoundRoll`].
         ///
-        /// See [CompoundRoll] for examples.
+        /// See [`CompoundRoll`] for examples.
         #[macro_export]
         macro_rules! roll_tuple {
             // Base case: nothing left → unit
@@ -96,12 +102,12 @@ pub mod roll {
             };
         }
 
-        /// Generate a [RollTuple] type from its component [Roll] objects
+        /// Generate a [`RollTuple`] type from its component [`Roll`] objects
         ///
-        /// Used alongside [roll_tuple] and [roll_tuple_pattern] to add convenience to
-        /// implementing [CompoundRoll].
+        /// Used alongside [`roll_tuple`] and [`roll_tuple_pattern`] to add convenience to
+        /// implementing [`CompoundRoll`].
         ///
-        /// See [CompoundRoll] for examples.
+        /// See [`CompoundRoll`] for examples.
         #[macro_export]
         macro_rules! roll_tuple_type {
             // Base case: nothing left → unit
@@ -113,12 +119,12 @@ pub mod roll {
             };
         }
 
-        /// Generate a pattern to unpack a [RollTuple]
+        /// Generate a pattern to unpack a [`RollTuple`]
         ///
-        /// Used alongside [roll_tuple] and [roll_tuple_type] to add convenience to
-        /// implementing [CompoundRoll].
+        /// Used alongside [`roll_tuple`] and [`roll_tuple_type`] to add convenience to
+        /// implementing [`CompoundRoll`].
         ///
-        /// See [CompoundRoll] for examples.
+        /// See [`CompoundRoll`] for examples.
         #[macro_export]
         macro_rules! roll_tuple_pattern {
             // Base case: nothing left → unit
@@ -164,10 +170,10 @@ pub mod roll {
             }
         }
 
-        /// A convenience trait to implement [Roll] for types that compose other [Roll] objects.
+        /// A convenience trait to implement [`Roll`] for types that compose other [`Roll`] objects.
         ///
-        /// By implementing this trait, duplicate implementations across [Roll::roll] and
-        /// [Roll::get_stats] can be distilled down to [CompoundRoll::calculate].
+        /// By implementing this trait, duplicate implementations across [`Roll::roll`](Roll#tymethod.roll) and
+        /// [`Roll::get_stats`](#tymethod.get_stats) can be distilled down to [`CompoundRoll::calculate`](CompoundRoll#tymethod.calculate).
         ///
         /// # Examples
         ///
@@ -270,14 +276,14 @@ pub mod roll {
             type Output;
             type DiceSet: RollTuple;
 
-            /// Return the dependent dice as a [RollTuple] object.
+            /// Return the dependent dice as a [`RollTuple`] object.
             ///
             /// This can almost always be implemented just by returning the matching value stored within the struct.
             ///
             /// See [Examples](#examples)
             fn get_dice(&self) -> &Self::DiceSet;
 
-            /// Return the dependent dice as a [RollTuple] object.
+            /// Return the dependent dice as a [`RollTuple`] object.
             ///
             /// This can almost always be implemented just by returning the matching value stored within the struct.
             ///
@@ -314,12 +320,12 @@ pub mod roll {
     }
 }
 
-/// Common implementations of the [Roll](roll::Roll) trait
+/// Common implementations of the [`Roll`](roll::Roll) trait
 pub mod utils;
 
 /// Convenience module for quickly importing the essentials of the crate
 ///
-/// In addition to curating imports, [prelude] provides the [d](prelude::d) function for
+/// In addition to curating imports, [`prelude`] provides the [`d`](prelude::d) function for
 /// easy creation of dice objects.
 ///
 /// Recommended usage:
@@ -335,7 +341,7 @@ pub mod prelude {
 
     /// Convenience method to generate a simple die.
     ///
-    /// Unwraps the result of `Die::new_baked(n)`.
+    /// Unwraps the result of [`Die::new_baked(n)`](Die##method.new_baked).
     ///
     /// # Panics
     ///
