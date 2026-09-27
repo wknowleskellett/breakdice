@@ -1,0 +1,46 @@
+name: Deploy Docs
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-docs:
+    name: Build & Deploy Docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build documentation
+        env:
+          RUSTDOCFLAGS: "--deny rustdoc::broken_intra_doc_links"
+        run: cargo doc --no-deps --all-features
+        # This crate doesn't have features at the time of writing, but I expect I'll reuse this later
+
+      - name: Add redirect index
+        run: |
+          CRATE=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].name' | tr '-' '_')
+          echo "<meta http-equiv=\"refresh\" content=\"0; url=${CRATE}/index.html\">" > target/doc/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: target/doc
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
