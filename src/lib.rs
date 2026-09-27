@@ -41,10 +41,10 @@ pub mod roll {
     pub use crate::box_dice;
 
     /// Generate a [`Vec<Box<dyn Roll>>`] object from the parameters.
-    /// 
+    ///
     /// This is the tool to use if all your [`Roll`] objects have the same [`Roll::Output`](Roll#associatedtype.Output) type. It
     /// allows for varying types and list lengths at runtime.
-    /// 
+    ///
     /// If you want to compose a die of dice of varying [`Roll::Output`](Roll#associatedtype.Output) types that will be known
     /// at compile time, you should look into [`CompoundRoll`](compound::CompoundRoll) and its associated macros.
     ///
@@ -139,9 +139,7 @@ pub mod roll {
         impl RollTuple for () {
             type Outputs = ();
 
-            fn roll_all(&mut self) -> Self::Outputs {
-                ()
-            }
+            fn roll_all(&mut self) -> Self::Outputs {}
 
             fn get_stats_all(&self) -> HashMap<Self::Outputs, f32> {
                 HashMap::from([((), 1.0)])

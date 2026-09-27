@@ -5,6 +5,8 @@ use crate::roll::Roll;
 pub mod dice {
     use std::{
         collections::HashMap,
+        error::Error,
+        fmt::Display,
         hash::Hash,
         iter::{Product, Sum},
         marker::PhantomData,
@@ -125,18 +127,37 @@ pub mod dice {
         rng: R,
     }
 
+    #[derive(Debug)]
+    pub struct SidelessDieError(i32);
+
+    impl Error for SidelessDieError {}
+
+    impl Display for SidelessDieError {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(
+                f,
+                "Cannot construct a die with fewer than 1 side: ({} sides)",
+                self.0
+            )
+        }
+    }
+
     impl<R: RngExt> Die<R> {
-        pub fn new(d: i32, rng: R) -> Result<Self, ()> {
-            if d > 0 { Ok(Self { d, rng }) } else { Err(()) }
+        pub fn new(d: i32, rng: R) -> Result<Self, SidelessDieError> {
+            if d > 0 {
+                Ok(Self { d, rng })
+            } else {
+                Err(SidelessDieError(d))
+            }
         }
     }
 
     impl Die<ThreadRng> {
-        pub fn new_baked(d: i32) -> Result<Self, ()> {
+        pub fn new_baked(d: i32) -> Result<Self, SidelessDieError> {
             if d > 0 {
                 Ok(Self { d, rng: rng() })
             } else {
-                Err(())
+                Err(SidelessDieError(d))
             }
         }
     }
@@ -245,6 +266,7 @@ pub mod dice {
     where
         U: Roll<Output: Add<V, Output = T>>,
     {
+        #[allow(clippy::type_complexity)]
         d: MapDie<T, U, Box<dyn Fn(U::Output) -> T>>,
         _marker: PhantomData<V>,
     }
@@ -304,6 +326,7 @@ pub mod dice {
     where
         U: Roll<Output: Mul<V, Output = T>>,
     {
+        #[allow(clippy::type_complexity)]
         d: MapDie<T, U, Box<dyn Fn(U::Output) -> T>>,
         _marker: PhantomData<V>,
     }
