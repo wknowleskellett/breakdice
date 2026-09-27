@@ -643,7 +643,7 @@ pub mod dice {
     /// let mut dadv = Disadvantage::new(d(20), d(20));
     ///
     /// for _ in 0..10 {
-    ///     println!("{}", adv.roll());
+    ///     println!("{}", dadv.roll());
     /// }
     /// ```
     pub struct Disadvantage<T, T1, T2>
