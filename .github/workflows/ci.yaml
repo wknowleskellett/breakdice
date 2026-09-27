@@ -32,3 +32,9 @@ jobs:
 
       - name: Run tests
         run: cargo test --verbose
+
+      - name: Build documentation
+        env:
+          RUSTDOCFLAGS: "--deny rustdoc::broken_intra_doc_links"
+        run: cargo doc --no-deps --all-features
+        # This crate doesn't have features at the time of writing, but I expect I'll reuse this later
