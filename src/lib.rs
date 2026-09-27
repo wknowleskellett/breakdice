@@ -9,8 +9,10 @@ pub mod roll {
     ///
     /// # Example
     /// ```
-    /// use dice::prelude::*;
-    /// use dice::utils::dice::Advantage;
+    /// use breakdice::{
+    ///     prelude::*,
+    ///     utils::dice::Advantage,
+    /// }
     ///
     /// let mut d20_1 = d(20);
     /// let mut d20_2 = d(20);
@@ -50,9 +52,11 @@ pub mod roll {
     ///
     /// # Example
     /// ```
-    /// use dice::roll::{Roll, box_dice};
-    /// use dice::utils::dice::Dice;
-    /// use dice::prelude::d;
+    /// use breakdice::{
+    ///     roll::{Roll, box_dice},
+    ///     utils::dice::Dice,
+    ///     prelude::d,
+    /// };
     ///
     /// fn polyhedral_set() -> Dice<i32> {
     ///     Dice::new(box_dice!(i32; d(4), d(6), d(8), d(10), d(10), d(12), d(20)))
@@ -178,7 +182,7 @@ pub mod roll {
         /// A `PrintDie` struct that logs every roll to the terminal:
         ///
         /// ```
-        /// use dice::{
+        /// use breakdice::{
         ///     roll::{Roll, compound::*},
         /// };
         /// use std::fmt::Display;
@@ -216,7 +220,7 @@ pub mod roll {
         /// ```
         /// use rand::rngs::ThreadRng;
         ///
-        /// use dice::{
+        /// use breakdice::{
         ///     prelude::d,
         ///     roll::{compound::*, Roll},
         ///     utils::dice::{Coin, Die, MapDie},
@@ -328,7 +332,7 @@ pub mod utils;
 ///
 /// Recommended usage:
 /// ```
-/// use dice::prelude::*;
+/// use breakdice::prelude::*;
 /// ```
 pub mod prelude {
     pub use crate::roll::compound::{roll_tuple, roll_tuple_pattern, roll_tuple_type};
@@ -348,7 +352,7 @@ pub mod prelude {
     /// # Examples
     ///
     /// ```
-    /// use dice::{
+    /// use breakdice::{
     ///     roll::Roll,
     ///     prelude::d,
     ///     utils::dice::AddDie,
@@ -365,7 +369,7 @@ pub mod prelude {
     /// ```
     ///
     /// ```
-    /// use dice::{
+    /// use breakdice::{
     ///     roll::Roll,
     ///     prelude::d,
     ///     utils::dice::Advantage,

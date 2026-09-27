@@ -1,6 +1,6 @@
 // use character::Character;
-use dice::prelude::*;
-use dice::{
+use breakdice::{
+    prelude::*,
     roll::Roll,
     utils::dice::{Advantage, ConstRoll, Disadvantage, SumDie},
 };
@@ -48,7 +48,7 @@ fn main() {
 }
 
 mod whatever {
-    use dice::{
+    use breakdice::{
         prelude::d,
         roll::compound::CompoundRoll,
         roll_tuple, roll_tuple_pattern, roll_tuple_type,
