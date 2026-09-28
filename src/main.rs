@@ -45,9 +45,13 @@ fn main() {
     println!();
     let mut sp = whatever::Specials::new();
     println!("{}", sp.roll());
+
+    sp.get_stats();
 }
 
 mod whatever {
+    use std::fmt::Display;
+
     use breakdice::{
         prelude::d,
         roll::compound::CompoundRoll,
@@ -66,6 +70,21 @@ mod whatever {
     pub enum Soup {
         CreamOfMushroom,
         Borscht,
+    }
+
+    pub struct SpecialSet {
+        entree: Entree,
+        soup: Soup,
+    }
+
+    impl Display for SpecialSet {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(
+                f,
+                "Tonight's specials are an entree of {:?}, and the soup du jour is {:?}.",
+                self.entree, self.soup
+            )
+        }
     }
 
     pub struct Specials {
@@ -102,7 +121,7 @@ mod whatever {
     }
 
     impl CompoundRoll for Specials {
-        type Output = String;
+        type Output = SpecialSet;
 
         type DiceSet = roll_tuple_type!(
             MapDie<Entree, Die<ThreadRng>, Box<dyn Fn(i32) -> Entree>>,
@@ -123,10 +142,7 @@ mod whatever {
         ) -> Self::Output {
             // [roll_tuple_pattern] is useful for unpacking the dice results.
             let roll_tuple_pattern!(entree, soup) = results;
-            format!(
-                "Tonight's specials are an entree of {:?}, and the soup du jour is {:?}.",
-                entree, soup
-            )
+            SpecialSet { entree, soup }
         }
     }
 }
