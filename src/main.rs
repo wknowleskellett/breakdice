@@ -1,6 +1,6 @@
 // use character::Character;
-use dice::prelude::*;
-use dice::{
+use breakdice::{
+    prelude::*,
     roll::Roll,
     utils::dice::{Advantage, ConstRoll, Disadvantage, SumDie},
 };
@@ -45,10 +45,14 @@ fn main() {
     println!();
     let mut sp = whatever::Specials::new();
     println!("{}", sp.roll());
+
+    sp.get_stats();
 }
 
 mod whatever {
-    use dice::{
+    use std::fmt::Display;
+
+    use breakdice::{
         prelude::d,
         roll::compound::CompoundRoll,
         roll_tuple, roll_tuple_pattern, roll_tuple_type,
@@ -66,6 +70,22 @@ mod whatever {
     pub enum Soup {
         CreamOfMushroom,
         Borscht,
+    }
+
+    #[derive(PartialEq, Eq, Hash)]
+    pub struct SpecialSet {
+        entree: Entree,
+        soup: Soup,
+    }
+
+    impl Display for SpecialSet {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(
+                f,
+                "Tonight's specials are an entree of {:?}, and the soup du jour is {:?}.",
+                self.entree, self.soup
+            )
+        }
     }
 
     pub struct Specials {
@@ -102,7 +122,7 @@ mod whatever {
     }
 
     impl CompoundRoll for Specials {
-        type Output = String;
+        type Output = SpecialSet;
 
         type DiceSet = roll_tuple_type!(
             MapDie<Entree, Die<ThreadRng>, Box<dyn Fn(i32) -> Entree>>,
@@ -119,14 +139,11 @@ mod whatever {
 
         fn calculate(
             &self,
-            results: <Self::DiceSet as dice::roll::compound::RollTuple>::Outputs,
+            results: <Self::DiceSet as breakdice::roll::compound::RollTuple>::Outputs,
         ) -> Self::Output {
             // [roll_tuple_pattern] is useful for unpacking the dice results.
             let roll_tuple_pattern!(entree, soup) = results;
-            format!(
-                "Tonight's specials are an entree of {:?}, and the soup du jour is {:?}.",
-                entree, soup
-            )
+            SpecialSet { entree, soup }
         }
     }
 }

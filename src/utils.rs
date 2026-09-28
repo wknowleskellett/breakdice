@@ -23,7 +23,7 @@ pub mod dice {
     ///
     /// # Example
     /// ```
-    /// use dice::{prelude::d, roll::Roll, utils::dice::ConstRoll};
+    /// use breakdice::{prelude::d, roll::Roll, utils::dice::ConstRoll};
     ///
     /// enum NumRoller {
     ///     Num(i32),
@@ -70,7 +70,7 @@ pub mod dice {
     ///
     /// # Examples
     /// ```
-    /// use dice::{roll::Roll, utils::dice::Coin};
+    /// use breakdice::{roll::Roll, utils::dice::Coin};
     /// use rand::rng;
     ///
     /// let mut go_to_store = Coin::new(rng());
@@ -116,7 +116,7 @@ pub mod dice {
     ///
     /// ```
     /// use rand::rng;
-    /// use dice::{roll::Roll, utils::dice::Die};
+    /// use breakdice::{roll::Roll, utils::dice::Die};
     ///
     /// let mut d10 = Die::new(10, rng()).unwrap(); // Only errors when the number is 0 or less
     /// println!("I got a {}", d10.roll());
@@ -186,7 +186,7 @@ pub mod dice {
     ///
     /// # Examples
     /// ```
-    /// use dice::{
+    /// use breakdice::{
     ///     prelude::d,
     ///     roll::{Roll, box_dice},
     ///     utils::dice::{Dice, MulDie},
@@ -247,7 +247,7 @@ pub mod dice {
     ///
     /// # Examples
     /// ```
-    /// use dice::{prelude::d, roll::Roll, utils::dice::AddDie};
+    /// use breakdice::{prelude::d, roll::Roll, utils::dice::AddDie};
     ///
     /// let mut d10 = d(10);
     /// let mut d10_plus_five = AddDie::new(d(10), 5);
@@ -307,7 +307,7 @@ pub mod dice {
     ///
     /// # Examples
     /// ```
-    /// use dice::{prelude::d, roll::Roll, utils::dice::MulDie};
+    /// use breakdice::{prelude::d, roll::Roll, utils::dice::MulDie};
     ///
     /// let mut d10 = d(10);
     /// let mut d10_times_five = MulDie::new(d(10), 5);
@@ -410,7 +410,7 @@ pub mod dice {
     /// # Examples
     ///
     /// ```
-    /// use dice::{
+    /// use breakdice::{
     ///     prelude::d,
     ///     roll::{Roll, box_dice},
     ///     utils::dice::{ConstRoll, SumDie},
@@ -498,7 +498,7 @@ pub mod dice {
     /// # Examples
     ///
     /// ```
-    /// use dice::{
+    /// use breakdice::{
     ///     prelude::d,
     ///     roll::{Roll, box_dice},
     ///     utils::dice::{ConstRoll, ProductDie},
@@ -580,7 +580,7 @@ pub mod dice {
     ///
     /// # Examples
     /// ```
-    /// use dice::{prelude::d, roll::Roll, utils::dice::Advantage};
+    /// use breakdice::{prelude::d, roll::Roll, utils::dice::Advantage};
     ///
     /// let mut adv = Advantage::new(d(20), d(20));
     ///
@@ -638,7 +638,7 @@ pub mod dice {
     ///
     /// # Examples
     /// ```
-    /// use dice::{prelude::d, roll::Roll, utils::dice::Disadvantage};
+    /// use breakdice::{prelude::d, roll::Roll, utils::dice::Disadvantage};
     ///
     /// let mut dadv = Disadvantage::new(d(20), d(20));
     ///
@@ -703,7 +703,7 @@ pub mod dice {
     /// # Example
     ///
     /// ```
-    /// use dice::{prelude::d, roll::Roll, utils::dice::MapDie};
+    /// use breakdice::{prelude::d, roll::Roll, utils::dice::MapDie};
     ///
     /// let sqrt_int = |n| ((n as f32).sqrt()*100.0) as i32;
     /// let mut sqrt_d100 = MapDie::new(sqrt_int, d(100));
