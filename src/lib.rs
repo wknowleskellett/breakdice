@@ -1,6 +1,6 @@
 /// The foundation of the crate
 pub mod roll {
-    use std::collections::HashMap;
+    use std::{collections::HashMap, hash::Hash};
 
     /// Provides a random element and its probability distribution.
     ///
@@ -33,7 +33,7 @@ pub mod roll {
     /// }
     /// ```
     pub trait Roll {
-        type Output;
+        type Output: Eq + Hash;
 
         fn roll(&mut self) -> Self::Output;
 

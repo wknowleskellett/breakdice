@@ -119,7 +119,7 @@ mod whatever {
 
         fn calculate(
             &self,
-            results: <Self::DiceSet as dice::roll::compound::RollTuple>::Outputs,
+            results: <Self::DiceSet as breakdice::roll::compound::RollTuple>::Outputs,
         ) -> Self::Output {
             // [roll_tuple_pattern] is useful for unpacking the dice results.
             let roll_tuple_pattern!(entree, soup) = results;
