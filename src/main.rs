@@ -72,6 +72,7 @@ mod whatever {
         Borscht,
     }
 
+    #[derive(PartialEq, Eq, Hash)]
     pub struct SpecialSet {
         entree: Entree,
         soup: Soup,
